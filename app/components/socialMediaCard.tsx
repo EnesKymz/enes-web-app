@@ -1,6 +1,7 @@
 "use client"
 import Link from "next/link";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function SocialMediaCard() {
   
@@ -40,6 +41,7 @@ export default function SocialMediaCard() {
   const [isCopied, setIsCopied] = useState(false);
   function handleCopy(text:string){
     navigator.clipboard.writeText(text);
+    toast.success("Email kopyalandı")
     setIsCopied(true);
     setTimeout(() => {
       setIsCopied(false);
