@@ -1,91 +1,103 @@
-import _default from "next/dist/client/router";
 import Image from "next/image";
 import Link from "next/link";
+import { PROJECTS } from "../data/portfolioData";
 
 export default function ExperienceCard() {
-  const projects = [
-    {
-      id: 1,
-      image:"/quantumclub.jpg",
-      name: "Quantum Club",
-      role: "Co-Founder",
-      tech: "Blockchain Network",
-      status: "Active",
-      url:"https://t.me/QuantumClubBot"
-    },
-    {
-      id: 2,
-      name: "Otopark Yönetimi",
-      role: "Full Stack Dev",
-      tech: "Next.js & Firebase",
-      status: "Active",
-      url:"https://otoparkyonetim.vercel.app/"
-    },
-    {
-      id: 3,
-      name: "Bilgisayar Programciligi",
-      role: "Full Stack Dev",
-      tech: "Next.js & Google API",
-      status: "Active",
-      url:"https://bilgisayar-programciligi.vercel.app/"
-    }
-  ];
-
   return (
-    <div className="flex font-mono text-sm md:text-base w-full">
+    <div className="flex font-mono text-xs sm:text-sm md:text-base w-full">
       <div className="flex-1">
         <div>
-          <span className="text-blue-400">const</span> <span className="text-yellow-300">Deneyimlerim</span> <span className="text-white">=</span> <span className="text-purple-400">{"{"}</span>
+          <span className="text-blue-400">const</span>{" "}
+          <span className="text-yellow-300">DeneyimlerimVeProjelerim</span>{" "}
+          <span className="text-white">=</span>{" "}
+          <span className="text-purple-400">{"{"}</span>
         </div>
 
-        <div className="pl-4 md:pl-8 border-l-2 border-gray-700 ml-2 mt-2 mb-2 space-y-4">
+        <div className="pl-3 sm:pl-6 md:pl-8 border-l-2 border-gray-700 ml-2 mt-2 mb-2 space-y-4">
           <div className="text-blue-300">
             projeler: <span className="text-purple-400">{"["}</span>
           </div>
-          <div className="pl-4 space-y-4">
-            {projects.map((item) => (
-              <div key={item.id} className="bg-[#2d2d2d]/50 p-4 rounded-lg border border-gray-700 hover:border-blue-500 hover:bg-[#2d2d2d] transition-all shadow-xl group cursor-default relative">
+
+          <div className="pl-2 sm:pl-4 space-y-4">
+            {PROJECTS.map((item) => (
+              <div
+                key={item.id}
+                className="bg-[#2d2d2d]/60 p-4 rounded-xl border border-gray-700/80 hover:border-indigo-500/60 hover:bg-[#2d2d2d] transition-all shadow-xl group cursor-default relative"
+              >
                 <span className="text-purple-400 font-bold">{"{"}</span>
-                <div className="pl-6 space-y-1 my-1">
-                  {item.image&& 
-                  <div>
-                  <span className="text-blue-300 font-bold">{"image:{"}</span>
-                  <div>
-                  <Image
-                  src={item.image}
-                  width={50}
-                  height={50}
-                  alt={item.name}
-                  />
-                  </div>
-                  <span className="text-blue-300 font-bold">{"},"}</span>
-                  </div>
-                  }
+                <div className="pl-4 sm:pl-6 space-y-1.5 my-2">
+                  {item.imageUrl && (
+                    <div className="flex items-center gap-3 my-1">
+                      <span className="text-blue-300 font-mono">image:</span>
+                      <div className="relative w-8 h-8 rounded-lg overflow-hidden border border-gray-600">
+                        <Image
+                          src={item.imageUrl}
+                          alt={item.title}
+                          fill
+                          className="object-cover"
+                          sizes="32px"
+                        />
+                      </div>
+                    </div>
+                  )}
+
                   <p>
-                    <span className="text-blue-300">project:</span> <span className="text-orange-300">&quot;{item.name}&quot;,</span>,
+                    <span className="text-blue-300">title:</span>{" "}
+                    <span className="text-orange-300">&quot;{item.title}&quot;,</span>
                   </p>
                   <p>
-                    <span className="text-blue-300">role:</span> <span className="text-orange-300">&quot;{item.role}&quot;,</span>,
+                    <span className="text-blue-300">role:</span>{" "}
+                    <span className="text-emerald-300">&quot;{item.role}&quot;,</span>
                   </p>
                   <p>
-                    <span className="text-blue-300">tech:</span> <span className="text-yellow-300">&quot;{item.tech}&quot;,</span>,
-                  </p>
-                  
-                  <p>
-                    <span className="text-blue-300">status:</span> <span className="text-green-400">&quot;{item.status}&quot;,</span>
+                    <span className="text-blue-300">category:</span>{" "}
+                    <span className="text-sky-300">&quot;{item.category}&quot;,</span>
                   </p>
                   <p>
-                    <span className="text-blue-300">url:</span> <Link target="_blank"  href={item.url||"/"} className="text-yellow-300">&quot;{item.url}&quot;,</Link>,
+                    <span className="text-blue-300">techStack:</span>{" "}
+                    <span className="text-yellow-300">
+                      [{item.tags.map((t) => `"${t}"`).join(", ")}],
+                    </span>
                   </p>
+                  <p>
+                    <span className="text-blue-300">status:</span>{" "}
+                    <span className="text-green-400">&quot;{item.status}&quot;,</span>
+                  </p>
+                  {item.liveUrl && (
+                    <p>
+                      <span className="text-blue-300">liveUrl:</span>{" "}
+                      <Link
+                        target="_blank"
+                        href={item.liveUrl}
+                        className="text-cyan-300 underline hover:text-cyan-200"
+                      >
+                        &quot;{item.liveUrl}&quot;
+                      </Link>
+                      ,
+                    </p>
+                  )}
+                  {item.githubUrl && (
+                    <p>
+                      <span className="text-blue-300">github:</span>{" "}
+                      <Link
+                        target="_blank"
+                        href={item.githubUrl}
+                        className="text-purple-300 underline hover:text-purple-200"
+                      >
+                        &quot;{item.githubUrl}&quot;
+                      </Link>
+                      ,
+                    </p>
+                  )}
                 </div>
                 <span className="text-purple-400 font-bold">{"},"}</span>
-                
               </div>
             ))}
           </div>
-          <div className="text-purple-400">{"],"}</div>
 
+          <div className="text-purple-400">{"],"}</div>
         </div>
+
         <div>
           <span className="text-purple-400">{"};"}</span>
         </div>
